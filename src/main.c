@@ -60,10 +60,17 @@ void main(void)
 
 
     while (1) {
-        // Toggle do LED usando a nova API
+        // Toggle do led 
+
+        // O LED verde pisca a cada 1 segundo durante 50ms e o azul a cada 500ms durante 50ms
+        // como eles estam em fases, eles piscam juntos no ciano 
         gpio_pin_toggle_dt(&led_green);
+        gpio_pin_toggle_dt(&led_blue);
         k_msleep(50);
         gpio_pin_toggle_dt(&led_green);
+        gpio_pin_toggle_dt(&led_blue);
+
+        
         k_msleep(450);
         gpio_pin_toggle_dt(&led_blue);
         k_msleep(50);
