@@ -31,7 +31,7 @@ void thread_pisca_led0(void *p1, void *p2, void *p3) {
         gpio_pin_toggle_dt(&led0); 
         k_msleep(50); 
 		gpio_pin_toggle_dt(&led0);
-		k_msleep(300);          
+		k_msleep(450);          
     }
 }
 
