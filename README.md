@@ -5,12 +5,12 @@ Atividade prática inicial da aula 1 da disciplina Microcontroladores 2 (PSI).
 Registre sua evolução utilizando os checklists abaixo por meio de commits com mensagens descritivas:
 
 ### Setup (individual)
-- [ ] Possuo VSCode instalado
-- [ ] Possuo MCUXpresso instalado
-- [ ] Possuo PlatformIO instalado
-- [ ] Possuo cabo USB compatível com Placa Freedom
-- [ ] Possuo Placa Freedom operacional
-- [ ] Possuo Zephyr atualizado para versão 4.2
+- [X] Possuo VSCode instalado
+- [X] Possuo MCUXpresso instalado
+- [X] Possuo PlatformIO instalado
+- [X] Possuo cabo USB compatível com Placa Freedom
+- [X] Possuo Placa Freedom operacional
+- [X] Possuo Zephyr atualizado para versão 4.2
 
 Materiais para consulta: https://frdm-kl25z-com-zephyr-rtos.super.site/instalao, https://frdm-kl25z-com-zephyr-rtos.super.site/tutoriais/1-exemplo-pisca-led-rtos/atualizao-para-o-zephyr-42
 
