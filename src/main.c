@@ -1,4 +1,6 @@
 // Led verde pisca a cada 1000 ms e vermelho pisca a cada 500 ms. Período do sinal de 100 ms.
+// Verificar que a cada piscada, é enviada uma mensagem no terminal pela FRDM (estático)
+// Verificar frequência de piscada no serial do notebook (dinâmico)
 
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
