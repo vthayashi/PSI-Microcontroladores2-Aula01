@@ -1,4 +1,4 @@
-// Led verde pisca a cada 1000 ms e vermelho pisca a cada 500 ms. Período do sinal de 100 ms.
+// Led verde pisca a cada 1000 ms e o LED vermelho pisca a cada 350 ms. Período de duração do sinal de 25 ms.
 // Verificar que a cada piscada, é enviada uma mensagem no terminal pela FRDM (estático)
 // Verificar frequência de piscada no serial do notebook (dinâmico)
 
@@ -60,30 +60,37 @@ void main(void)
     printk("LED vermelho piscando no %s pino %d\n", ledvermelho.port->name, ledvermelho.pin);
 
     while (1) {
-
-        //LED verde pisca (t = 0)
-        gpio_pin_toggle_dt(&ledverde);
-        k_msleep(100);
-        printk("Led verde piscou!\n");
-        gpio_pin_toggle_dt(&ledverde);
-
-        k_msleep(200);
-
-        //LED vermelho pisca (t = 300)
-        gpio_pin_toggle_dt(&ledvermelho);
-        k_msleep(100);
-        printk("Led vermelho piscou!\n");
-        gpio_pin_toggle_dt(&ledvermelho);
-
-        k_msleep(400);
-
-        //LED vermelho pisca (t = 800)
-        gpio_pin_toggle_dt(&ledvermelho);
-        k_msleep(100);
-        printk("Led vermelho piscou!\n");
-        gpio_pin_toggle_dt(&ledvermelho);
-
-        k_msleep(100);
-
+    
+        for(int t = 0; t < 7000; t++){
+            if((t % 1000) == 0){
+                if(((t-25) % 350) == 0){
+                    //LEDs verde e vermelho piscam
+                    gpio_pin_toggle_dt(&ledverde);
+                    gpio_pin_toggle_dt(&ledvermelho);
+                    k_msleep(25);
+                    printk("Led verde piscou! (t = %d ms)\n", t);
+                    printk("Led vermelho piscou! (t = %d ms)\n", t);
+                    gpio_pin_toggle_dt(&ledverde);
+                    gpio_pin_toggle_dt(&ledvermelho);
+                    t += 24;
+                } else {
+                    //LED verde pisca
+                    gpio_pin_toggle_dt(&ledverde);
+                    k_msleep(25);
+                    printk("Led verde piscou! (t = %d ms)\n", t);
+                    gpio_pin_toggle_dt(&ledverde);
+                    t += 24;
+                }
+            } else if(((t-25) % 350) == 0) {
+                //LED vermelho pisca
+                gpio_pin_toggle_dt(&ledvermelho);
+                k_msleep(25);
+                printk("Led vermelho piscou! (t = %d ms)\n", t);
+                gpio_pin_toggle_dt(&ledvermelho);
+                t += 24;
+            } else {
+                k_msleep(1);
+            }
+        }
     }
 }
