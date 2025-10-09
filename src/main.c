@@ -77,6 +77,4 @@ void main(void)
 
         k_msleep(40);
     }
-
-    return 0;
 }
