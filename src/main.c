@@ -1,4 +1,4 @@
-// Led verde pisca a cada 1000 ms e vermelho pisca a cada 500 ms. Período do sinal de 100 ms.
+// Led verde pisca a cada 1000 ms e vermelho pisca a cada 350 ms. Período do sinal de 25 ms.
 // Verificar que a cada piscada, é enviada uma mensagem no terminal pela FRDM (estático)
 // Verificar frequência de piscada no serial do notebook (dinâmico)
 
@@ -31,10 +31,10 @@ void pisca_verde(void)
 {
     while (1) {
         gpio_pin_toggle_dt(&ledverde);
-        k_msleep(100);
+        k_msleep(25);
         printk("Led verde piscou!\n");
         gpio_pin_toggle_dt(&ledverde);
-        k_msleep(900);
+        k_msleep(975);
     }
 }
 
@@ -42,10 +42,10 @@ void pisca_vermelho(void)
 {
     while (1) {
         gpio_pin_toggle_dt(&ledvermelho);
-        k_msleep(100);
+        k_msleep(25);
         printk("Led vermelho piscou!\n");
         gpio_pin_toggle_dt(&ledvermelho);
-        k_msleep(400);
+        k_msleep(275);
     }
 }
 
@@ -53,7 +53,7 @@ void pisca_vermelho(void)
 K_THREAD_DEFINE(thread_led_verde, 512, pisca_verde, NULL, NULL, NULL, 7, 0, 100);
 
 // Criar a thread para LED vermelho
-K_THREAD_DEFINE(thread_led_vermelho, 512, pisca_vermelho, NULL, NULL, NULL, 7, 0, 300);
+K_THREAD_DEFINE(thread_led_vermelho, 512, pisca_vermelho, NULL, NULL, NULL, 7, 0, 125);
 
 void main(void){
 
@@ -89,10 +89,9 @@ void main(void){
 
     printk("LED verde piscando no %s pino %d\n", ledverde.port->name, ledverde.pin);
     printk("LED vermelho piscando no %s pino %d\n", ledvermelho.port->name, ledvermelho.pin);
-
-    k_msleep(100);
+    
     while (1) {
         printk("Main executando\n");
-        k_msleep(1000);
+        k_msleep(7000);
     }
 }
