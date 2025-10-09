@@ -1,7 +1,10 @@
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
+#include <zephyr/kernel.h>
 
+#define STACK_SIZE 1024
+#define PRIORITY 5
 #define SLEEP_TIME_MS 500
 
 // Define o LED usando Device Tree
@@ -28,67 +31,58 @@ static const struct gpio_dt_spec led2 = GPIO_DT_SPEC_GET(LED2_NODE, gpios);
 #error "Unsupported board: led0 devicetree alias is not defined"
 #endif
 
-void main(void)
+void minha_thread(void)
 {
-    int ret, ret1, ret2;
+     int ret;
 
-    // Verifica se o device está pronto
     if (!gpio_is_ready_dt(&led)) {
         printk("Error: LED device %s is not ready\n", led.port->name);
         return;
     }
 
-    if (!gpio_is_ready_dt(&led1)) {
-        printk("Error: LED device %s is not ready\n", led.port->name);
-        return;
-    }
-
-    if (!gpio_is_ready_dt(&led2)) {
-        printk("Error: LED device %s is not ready\n", led.port->name);
-        return;
-    }
-
-    // Configura o pino como saída
     ret = gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE);
     if (ret < 0) {
         printk("Error %d: failed to configure LED pin\n", ret);
         return;
     }
 
-    ret1 = gpio_pin_configure_dt(&led1, GPIO_OUTPUT_ACTIVE);
-    if (ret1 < 0) {
-        printk("Error %d: failed to configure LED pin\n", ret1);
-        return;
-    }
-
-    ret2 = gpio_pin_configure_dt(&led2, GPIO_OUTPUT_ACTIVE);
-    if (ret2 < 0) {
-        printk("Error %d: failed to configure LED pin\n", ret2);
-        return;
-    }
-
-    printk("LED blinking on %s pin %d\n", led.port->name, led.pin);
-    printk("LED blinking on %s pin %d\n", led1.port->name, led1.pin);
-    printk("LED blinking on %s pin %d\n", led2.port->name, led2.pin);
-
-    int timer = 0;
-    int timer1 = 0;
-
     while (1) {
-        // Toggle do LED usando a nova API
-        if (timer == 350) {
-            gpio_pin_toggle_dt(&led);
-            printk("LED blinking on %s pin %d\n", led1.port->name, led1.pin);
-            timer = 0;
-        }
-        
-        if (timer1 == 1000) {
-            gpio_pin_toggle_dt(&led);
-            printk("LED blinking on %s pin %d\n", led.port->name, led.pin);
-            timer1 = 0;
-        }
-        
-        timer++;
-        timer1++;
-        k_msleep(1);
+        gpio_pin_toggle_dt(&led);
+        printk("LED blinking on %s pin %d\n", led.port->name, led.pin);
+        k_msleep(1000);
     }
+}
+
+void minha_thread1(void)
+{
+    int ret;
+
+    if (!gpio_is_ready_dt(&led1)) {
+        printk("Error: LED device %s is not ready\n", led.port->name);
+        return;
+    }
+
+    ret = gpio_pin_configure_dt(&led1, GPIO_OUTPUT_ACTIVE);
+    if (ret < 0) {
+        printk("Error %d: failed to configure LED pin\n", ret);
+        return;
+    }
+    
+    while (1) {
+        gpio_pin_toggle_dt(&led1);
+        printk("LED blinking on %s pin %d\n", led1.port->name, led1.pin);
+        k_msleep(350);
+    }
+}
+
+// Criar a thread
+K_THREAD_DEFINE(minha_thread_id, 512, minha_thread, NULL, NULL, NULL, 7, 0, 0);
+K_THREAD_DEFINE(minha_thread_id1, 512, minha_thread1, NULL, NULL, NULL, 7, 0, 0);
+
+void main(void)
+{
+    while (1) {
+        k_thread_suspend(k_current_get());
+        printk("teste main");
+    }
+}
