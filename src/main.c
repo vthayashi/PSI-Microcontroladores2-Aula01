@@ -59,19 +59,35 @@ void main(void)
 
 
 
-    while (1) {
+      while (1) {
         // Toggle do LED usando a nova API
-        gpio_pin_toggle_dt(&led_green);
-        gpio_pin_toggle_dt(&led_blue);
-        k_msleep(50);
-        gpio_pin_toggle_dt(&led_blue);
-        gpio_pin_toggle_dt(&led_green);
-        k_msleep(450);
 
-        
-        gpio_pin_toggle_dt(&led_blue);
-        k_msleep(50);
-        gpio_pin_toggle_dt(&led_blue);
-        k_msleep(450);
+        for( int i = 0; i < 7000; i++){
+            if (i % 1000 == 0){
+                gpio_pin_toggle_dt(&led_green);
+                k_msleep(25);
+                gpio_pin_toggle_dt(&led_green);
+                i += 24;
+
+            } else if ( i % 350 == 0){
+                gpio_pin_toggle_dt(&led_blue);
+                k_msleep(25);
+                gpio_pin_toggle_dt(&led_blue);
+                i += 24;
+
+            } else if (i % 1000 == 0 && i % 350 == 0){
+                gpio_pin_toggle_dt(&led_green);
+                gpio_pin_toggle_dt(&led_blue);
+                k_msleep(25);
+                gpio_pin_toggle_dt(&led_green);
+                gpio_pin_toggle_dt(&led_blue);
+                i += 24;
+
+            } else {
+                k_msleep(1);
+            }
+
+        }
     }
+
 }
