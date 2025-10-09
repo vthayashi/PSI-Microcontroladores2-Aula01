@@ -53,16 +53,22 @@ void main(void)
 
    while (1) {
         gpio_pin_set_dt(&led0, 1);
+        printk("VERDE ON")
         k_msleep(100);
         gpio_pin_set_dt(&led0, 0);
+        printk("VERDE OFF")
         k_msleep(275);
         gpio_pin_set_dt(&led1, 1);
+        printk("AZUL ON")
         k_msleep(100);
         gpio_pin_set_dt(&led1, 0);
+        printk("VERDE OFF")
         k_msleep(275);
         gpio_pin_set_dt(&led1, 1);
+        printk("AZUL ON")
         k_msleep(100);
         gpio_pin_set_dt(&led1, 0);
+        printk("VERDE OFF")
         k_msleep(50);
     }
 }
