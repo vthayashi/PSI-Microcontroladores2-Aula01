@@ -29,8 +29,10 @@ void thread_pisca_led0(void *p1, void *p2, void *p3) {
 	
     while (1) {
         gpio_pin_toggle_dt(&led0); 
-        k_msleep(50); 
+        k_msleep(50);
+        printk("AZUL ON")
 		gpio_pin_toggle_dt(&led0);
+        printk("AZUL OFF")
 		k_msleep(300);          
     }
 }
@@ -54,7 +56,9 @@ void thread_pisca_led1(void *p1, void *p2, void *p3) {
     while (1) {
         gpio_pin_toggle_dt(&led1);
         k_msleep(50); 
+        printk("VERDE ON")
 		gpio_pin_toggle_dt(&led1);
+        printk("VERDE OFF")
 		k_msleep(950); 
     }
 }
