@@ -3,11 +3,11 @@
 Planejamento do Código e quais requisitos ele deve cumprir:
 
 ## Requisitos
-    - Piscar o LED Verde a cada um segundo e piscar o LED azul a cada 350ms através de um sistema Baremetal;
+    - Piscar o LED Verde a cada um segundo e piscar o LED azul a cada 350ms através de um sistema de threads;
     - O sistema deve realizar a ativação dos LEDs de maneira que a execução de um LED não interrompa a execução do outro.
 
 
-### 1 Passo - Bibliotecas e definições:
+### 1º Passo - Bibliotecas e definições:
     - Incluir as bibliotecas, definir as constantes (Sleep Time) e definir os endereços dos LEDs nas contantes de LED;
     - Confirmar se o LED está definido no Device Tree para depois fazer uma struct dos LEDs verde e azul.
 

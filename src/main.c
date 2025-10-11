@@ -23,11 +23,31 @@ static const struct gpio_dt_spec ledB = GPIO_DT_SPEC_GET(LED1_NODE, gpios);
 #error "Unsupported board: led0 devicetree alias is not defined"
 #endif
 
+#define STACK_SIZE 1024
+#define PRIORITY 7
+
+void pisca_verde (void *arg1, void *arg2, void *arg3) {
+    while (1) {
+        gpio_pin_toggle_dt(&ledG);
+        printk("\n Green LED Toggle");
+        k_msleep(1000);
+    }
+}
+
+void pisca_azul (void *arg1, void *arg2, void *arg3) {
+    while (1) {
+        gpio_pin_toggle_dt(&ledB);
+        printk("\n Blue LED Toggle");
+        k_msleep(350);
+    }
+}
+
+K_THREAD_DEFINE(piscar_Verde, STACK_SIZE, pisca_verde, NULL, NULL, NULL, PRIORITY, 0, 0);
+K_THREAD_DEFINE(piscar_Azul, STACK_SIZE, pisca_azul, NULL, NULL, NULL, PRIORITY, 0, 0);
 
 int main(void)
 {
     int ret;
-    int time = 0;
 
     // Verifica se o device está pronto
     if (!gpio_is_ready_dt(&ledG)) {
@@ -57,21 +77,7 @@ int main(void)
     printk("LED blinking on %s pin %d\n", ledB.port->name, ledB.pin);
 
     while (1) {
-        k_msleep(50);
-        time += 50;
-        if (time%350 == 0){
-            gpio_pin_toggle_dt(&ledB);
-            printk("\n Blue LED:", ledB);
-            printk("\n TIME: ", time);
-        }
-        if(time%1000 == 0){
-            gpio_pin_toggle_dt(&ledG);
-            printk("\n Green LED:", ledG);
-            printk("\n TIME: ", time);
-        }
-        if (time == 7000){
-            time =0;
-            printk("\n TIME RESET \n");
-        }
+        printk("Main executando\n");
+        k_msleep(2000);
     }
 }
