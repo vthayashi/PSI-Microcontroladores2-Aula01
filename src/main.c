@@ -59,7 +59,7 @@ void main(void)
         }
         if (counter % 20 == 0)
         {
-            printk("\nBlink - Led Vermelho");
+            printk("\nBlink - Led Verde");
             gpio_pin_set_dt(&ledg, 1);
         }
         k_msleep(10);
