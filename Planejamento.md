@@ -1,37 +1,26 @@
 # PSI-Microcontroladores2-Aula01
 
-Planejamento do Código e quais requisitos ele deve cumprir
+Planejamento do Código e quais requisitos ele deve cumprir:
 
-### 1 Passo:
-- [ ] Possuo VSCode instalado
-- [ ] Possuo MCUXpresso instalado
-- [ ] Possuo PlatformIO instalado
-- [ ] Possuo cabo USB compatível com Placa Freedom
-- [ ] Possuo Placa Freedom operacional
-- [ ] Possuo Zephyr atualizado para versão 4.2
+## Requisitos
+    - Piscar o LED Verde a cada um segundo e piscar o LED azul a cada 350ms através de um sistema Baremetal;
+    - O sistema deve realizar a ativação dos LEDs de maneira que a execução de um LED não interrompa a execução do outro.
 
-Materiais para consulta: https://frdm-kl25z-com-zephyr-rtos.super.site/instalao, https://frdm-kl25z-com-zephyr-rtos.super.site/tutoriais/1-exemplo-pisca-led-rtos/atualizao-para-o-zephyr-42
 
-### 2º Passo: 
-- [ ] Crie uma branch chamada baremetal
-- [ ] Compile e execute o exemplo de piscar led baremetal na placa Freedom com o Zephyr versão 4.2 (vide [https://frdm-kl25z-com-zephyr-rtos.super.site/tutoriais/2-pisca-led-simples](https://frdm-kl25z-com-zephyr-rtos.super.site/tutoriais/1-exemplo-pisca-led-rtos/atualizao-para-o-zephyr-42)). Dica: Utilize por enquanto somente o led da placa
-- [ ] Faça alterações no código para controlar dois leds: um led deve piscar a cada segundo, e o segundo led deve piscar a cada meio segundo
-- [ ] Desafio: tente fazer com que o primeiro led pisque a cada segundo, e o segundo led pisque a cada 350 ms
-- [ ] Crie um planejamento de testes para verificação do correto funcionamento, detalhando quais são os resultados esperados
-- [ ] Abra uma Pull Request
-- [ ] Seu par irá avaliar a Pull Request: adicionar sugestões em issues ou na discussão do PR (ATENÇÃO: o par deve tentar executar os testes propostos, e mesmo em caso de tudo funcionar, registrar em comentários como a validação foi realizada)
-- [ ] Após as pendências serem resolvidas, seu par irá validar as melhorias e aceitar a PR
+### 1 Passo - Bibliotecas e definições:
+    - Incluir as bibliotecas, definir as constantes (Sleep Time) e definir os endereços dos LEDs nas contantes de LED;
+    - Confirmar se o LED está definido no Device Tree para depois fazer uma struct dos LEDs verde e azul.
 
-### 3º Passo:
-- [ ] Crie uma branch chamada threads
-- [ ] Compile e execute o exemplo de piscar led com threads na placa Freedom (vide [https://github.com/platformio/platform-freescalekinetis/blob/develop/examples/zephyr-blink/src/main.c e https://frdm-kl25z-com-zephyr-rtos.super.site/tutoriais/1-exemplo-pisca-led-rtos](https://frdm-kl25z-com-zephyr-rtos.super.site/tutoriais/threads-zephyr-42))
-- [ ] Faça alterações no código para controlar dois leds: um led deve piscar a cada segundo, e o segundo led deve piscar a cada meio segundo
-- [ ] Desafio: tente fazer com que o primeiro led pisque a cada segundo, e o segundo led pisque a cada 350 ms
-- [ ] Crie um planejamento de testes para verificação do correto funcionamento, detalhando quais são os resultados esperados
-- [ ] Abra uma Pull Request
-- [ ] Seu par irá avaliar a Pull Request: adicionar sugestões em issues ou na discussão do PR (ATENÇÃO: o par deve tentar executar os testes propostos, e mesmo em caso de tudo funcionar, registrar em comentários como a validação foi realizada)
-- [ ] Após as pendências serem resolvidas, seu par irá validar as melhorias e aceitar a PR
+### 2º Passo - Main (Fora do laço infinito): 
+    - Definir as variáveis inteiras ret e time (Ret servirá como variável de controle do retorno do funcionamento do LED; Time servirá como variável de um temporizador utilizado no Loop);
+    - Verificar se o device está pronto;
+    - Configurar os dois pinos dos dois LEDs como saída ativa;
+    - Após todos os procedimentos derem certo, o sistema imprime que os LEDs estão piscando, cada um mostrando sua devida porta e seu devido pino.
 
-### 4º Passo:
-- [ ] Explore recursos de debug e faça um arquivo markdown mostrando como estes recursos podem ser úteis na identificação e correção de problemas
-- [ ] Reflita e responda em seu arquivo markdown: qual a diferença entre os recursos de debug e testes? São abordagens complementares?
+### 3º Passo - Main (Dentro do Laço infinito):
+    - Espera 50ms em todo começo de laço
+    - Adiciona 50 a variável "time" para contar o tempo
+    - Toda vez que a variável "time" for múltipla de 350, o LED azul ativa. Enquanto o LED verde ativa toda vez que a variável "time" for múltipla de 1000;
+    - Toda vez que a variável "time" for igual a 7000 (Mínimo múltiplo comum de 350 e 1000), a variável "time" volta para 0 para não ter problemas de overflow.
+    -  Toda vez que os LEDs piscam, é impresso no terminal o LED que está piscando e o valor armazenado na variável "time" para verificar se ela está piscando de acordo com os tempos necessários
+    - Toda vez que a variável "time" volta para o 0, o programa imprime uma mensagem de reset para saber se a variável está voltando normalmente.
