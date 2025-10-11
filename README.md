@@ -6,8 +6,8 @@ Esse código é a implementação com threads, abra o Visual Code, ou qualquer o
 - [x] Desafio: tente fazer com que o primeiro led pisque a cada segundo, e o segundo led pisque a cada 350 ms
 - [x] Crie um planejamento de testes para verificação do correto funcionamento, detalhando quais são os resultados esperados
 - [x] Abra uma Pull Request
-- [] Seu par irá avaliar a Pull Request: adicionar sugestões em issues ou na discussão do PR (ATENÇÃO: o par deve tentar executar os testes propostos, e mesmo em caso de tudo funcionar, registrar em comentários como a validação foi realizada)
-- [] Após as pendências serem resolvidas, seu par irá validar as melhorias e aceitar a PR
+- [x] Seu par irá avaliar a Pull Request: adicionar sugestões em issues ou na discussão do PR (ATENÇÃO: o par deve tentar executar os testes propostos, e mesmo em caso de tudo funcionar, registrar em comentários como a validação foi realizada)
+- [x] Após as pendências serem resolvidas, seu par irá validar as melhorias e aceitar a PR
 
 ### Desafio (individual)
 - [] Explore recursos de debug e faça um arquivo markdown mostrando como estes recursos podem ser úteis na identificação e correção de problemas
