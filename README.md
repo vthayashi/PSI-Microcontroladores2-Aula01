@@ -17,4 +17,4 @@ Atividade prática inicial da aula 1 da disciplina Microcontroladores 2 (PSI).
     Fazer o led vermelho piscar a cada 350ms e o verde a cada 1s.
   
 - Descricao do codigo:
-    O codigo funciona por meio de um contador e um loop infinito, desencadeado a cada 50ms. A cada ciclo, se incrementa o contador. Quando o resto da divisao do contador por 7 e' igual a 0 (counter%7 == 0), acionamos o led vermelho, e quando o resto da divisao do contador por 20 e' 0, acionamos o verde. Quando o contador chega em 99, resetamos o seu valor para 0 ao inves de aumentar por 1.
+    O codigo funciona por meio de um contador e um loop infinito, desencadeado a cada 50ms. A cada ciclo, se incrementa o contador. Quando o resto da divisao do contador por 7 e' igual a 0 (counter%7 == 0), acionamos o led vermelho, e quando o resto da divisao do contador por 20 e' 0, acionamos o verde. Quando o contador chega em 139, resetamos o seu valor para 0 ao inves de aumentar por 1.
