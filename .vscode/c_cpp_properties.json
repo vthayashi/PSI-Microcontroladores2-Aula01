@@ -8,11 +8,11 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "c:/Users/Usuario/OneDrive/Documentos/PlatformIO/Projects/251007-153052-zephyr-blink/include",
-                "c:/Users/Usuario/OneDrive/Documentos/PlatformIO/Projects/251007-153052-zephyr-blink/src",
-                "C:/Users/Usuario/OneDrive/Documentos/PlatformIO/Projects/251007-153052-zephyr-blink/.pio/build/frdm_kl25z/zephyr/include/generated/zephyr",
+                "c:/Users/Usuario/OneDrive/Desktop/Forks/PSIAula1/include",
+                "c:/Users/Usuario/OneDrive/Desktop/Forks/PSIAula1/src",
+                "C:/Users/Usuario/OneDrive/Desktop/Forks/PSIAula1/.pio/build/frdm_kl25z/zephyr/include/generated/zephyr",
                 "C:/.platformio/packages/framework-zephyr/include",
-                "C:/Users/Usuario/OneDrive/Documentos/PlatformIO/Projects/251007-153052-zephyr-blink/.pio/build/frdm_kl25z/zephyr/include/generated",
+                "C:/Users/Usuario/OneDrive/Desktop/Forks/PSIAula1/.pio/build/frdm_kl25z/zephyr/include/generated",
                 "C:/.platformio/packages/framework-zephyr/soc/nxp/kinetis",
                 "C:/.platformio/packages/framework-zephyr/soc/nxp/kinetis/kl2x",
                 "C:/.platformio/packages/framework-zephyr/soc/nxp/kinetis/common",
@@ -29,11 +29,11 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "c:/Users/Usuario/OneDrive/Documentos/PlatformIO/Projects/251007-153052-zephyr-blink/include",
-                    "c:/Users/Usuario/OneDrive/Documentos/PlatformIO/Projects/251007-153052-zephyr-blink/src",
-                    "C:/Users/Usuario/OneDrive/Documentos/PlatformIO/Projects/251007-153052-zephyr-blink/.pio/build/frdm_kl25z/zephyr/include/generated/zephyr",
+                    "c:/Users/Usuario/OneDrive/Desktop/Forks/PSIAula1/include",
+                    "c:/Users/Usuario/OneDrive/Desktop/Forks/PSIAula1/src",
+                    "C:/Users/Usuario/OneDrive/Desktop/Forks/PSIAula1/.pio/build/frdm_kl25z/zephyr/include/generated/zephyr",
                     "C:/.platformio/packages/framework-zephyr/include",
-                    "C:/Users/Usuario/OneDrive/Documentos/PlatformIO/Projects/251007-153052-zephyr-blink/.pio/build/frdm_kl25z/zephyr/include/generated",
+                    "C:/Users/Usuario/OneDrive/Desktop/Forks/PSIAula1/.pio/build/frdm_kl25z/zephyr/include/generated",
                     "C:/.platformio/packages/framework-zephyr/soc/nxp/kinetis",
                     "C:/.platformio/packages/framework-zephyr/soc/nxp/kinetis/kl2x",
                     "C:/.platformio/packages/framework-zephyr/soc/nxp/kinetis/common",
@@ -62,7 +62,7 @@
             ],
             "cStandard": "c99",
             "forcedInclude": [
-                "C:/Users/Usuario/OneDrive/Documentos/PlatformIO/Projects/251007-153052-zephyr-blink/.pio/build/frdm_kl25z/zephyr/include/generated/zephyr/autoconf.h",
+                "C:/Users/Usuario/OneDrive/Desktop/Forks/PSIAula1/.pio/build/frdm_kl25z/zephyr/include/generated/zephyr/autoconf.h",
                 "C:/.platformio/packages/framework-zephyr/include/zephyr/toolchain/zephyr_stdint.h",
                 ""
             ],
@@ -75,7 +75,7 @@
                 "-isystem",
                 "C:/.platformio/packages/framework-zephyr/lib/libc/common/include",
                 "-isystem",
-                "C:/Users/Usuario/OneDrive/Documentos/PlatformIO/Projects/251007-153052-zephyr-blink/.pio/build/frdm_kl25z/modules/picolibc/picolibc/include",
+                "C:/Users/Usuario/OneDrive/Desktop/Forks/PSIAula1/.pio/build/frdm_kl25z/modules/picolibc/picolibc/include",
                 "-isystem",
                 "c:/.platformio/packages/toolchain-gccarmnoneeabi@1.80201.181220/bin/../lib/gcc/arm-none-eabi/8.2.1/include",
                 "-isystem",
