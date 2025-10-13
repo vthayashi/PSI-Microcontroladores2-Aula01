@@ -3,7 +3,7 @@
 #include <zephyr/drivers/gpio.h>
 
 #define PERIODO_LED0 1000
-#define PERIODO_LED1 500
+#define PERIODO_LED1 350
 #define PULSO_TIME 100
 
 #define LED0_NODE DT_ALIAS(led0)
