@@ -2,40 +2,54 @@
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
 
-#define SLEEP_TIME_MS 500
+#define PERIODO_LED 1000
+#define PULSO_TIME 100
 
-// Define o LED usando Device Tree
 #define LED0_NODE DT_ALIAS(led0)
 
-// Verifica se o LED está definido no Device Tree
 #if DT_NODE_HAS_STATUS(LED0_NODE, okay)
-static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
+static const struct gpio_dt_spec led0 = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
 #else
 #error "Unsupported board: led0 devicetree alias is not defined"
 #endif
 
-void main(void)
+void blink_led(void)
 {
     int ret;
 
-    // Verifica se o device está pronto
-    if (!gpio_is_ready_dt(&led)) {
-        printk("Error: LED device %s is not ready\n", led.port->name);
+    if (!gpio_is_ready_dt(&led0)) {
+        printk("Error: LED device %s is not ready\n", led0.port->name);
         return;
     }
 
-    // Configura o pino como saída
-    ret = gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE);
+    ret = gpio_pin_configure_dt(&led0, GPIO_OUTPUT_ACTIVE);
     if (ret < 0) {
         printk("Error %d: failed to configure LED pin\n", ret);
         return;
     }
 
-    printk("LED blinking on %s pin %d\n", led.port->name, led.pin);
+    printk("Thread iniciada: LED0 piscando no pino %d\n", led0.pin);
+
+    // Pega o tempo inicial
+    int64_t start_time = k_uptime_get();
 
     while (1) {
-        // Toggle do LED usando a nova API
-        gpio_pin_toggle_dt(&led);
-        k_msleep(SLEEP_TIME_MS);
+        int64_t now = k_uptime_get();
+        int64_t elapsed = now - start_time;
+        int64_t next_cycle = ((elapsed / PERIODO_LED) + 1) * PERIODO_LED;
+
+        gpio_pin_set_dt(&led0, 1);
+        k_msleep(PULSO_TIME);
+        gpio_pin_set_dt(&led0, 0);
+
+        // Espera até o próximo múltiplo exato do período
+        k_msleep(next_cycle - (k_uptime_get() - start_time));
     }
+}
+
+K_THREAD_DEFINE(blink_led_id, 1024, blink_led, NULL, NULL, NULL, 7, 0, 0);
+
+void main(void)
+{
+    printk("Sistema iniciado.\n");
 }
