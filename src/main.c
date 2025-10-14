@@ -20,6 +20,20 @@ static const struct gpio_dt_spec ledd = GPIO_DT_SPEC_GET(LED1_NODE, gpios);
 #error "Unsupported board: led0 devicetree alias is not defined"
 #endif
 
+void piscarled(){
+    while(1){
+    gpio_pin_toggle_dt(&led);
+    k_msleep(1000)
+}}
+void piscarledd(){
+    while(1){
+    gpio_pin_toggle_dt(&ledd);
+    k_msleep(350)
+}}
+
+K_THREAD_DEFINE(piscar_led1, 512, piscarled, NULL, NULL, NULL, 7, 0, 0);
+K_THREAD_DEFINE(piscar_led2, 1024, piscarledd, NULL, NULL, NULL, 7, 0, 0);
+
 int main()
 {
     int ret;
@@ -53,18 +67,5 @@ int main()
     }
 
     printk("LED blinking on %s pin %d\n", led.port->name, led.pin);
-    int tick = 4;
-    while (1)
-    {
-        if (tick % 7 == 0)
-        {
-            gpio_pin_toggle_dt(&led);
-        }
-        if (tick % 20 == 0)
-        {
-            gpio_pin_toggle_dt(&ledd);
-        }
-        tick++;
-        k_msleep(SLEEP_TIME_MS/2);
-    }
+    while (1){}
 }
