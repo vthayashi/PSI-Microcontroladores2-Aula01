@@ -23,12 +23,12 @@ static const struct gpio_dt_spec ledd = GPIO_DT_SPEC_GET(LED1_NODE, gpios);
 void piscarled(){
     while(1){
     gpio_pin_toggle_dt(&led);
-    k_msleep(1000)
+    k_msleep(1000);
 }}
 void piscarledd(){
     while(1){
     gpio_pin_toggle_dt(&ledd);
-    k_msleep(350)
+    k_msleep(350);
 }}
 
 K_THREAD_DEFINE(piscar_led1, 512, piscarled, NULL, NULL, NULL, 7, 0, 0);
@@ -69,3 +69,4 @@ int main()
     printk("LED blinking on %s pin %d\n", led.port->name, led.pin);
     while (1){}
 }
+
