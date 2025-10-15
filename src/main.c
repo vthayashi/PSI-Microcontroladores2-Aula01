@@ -2,79 +2,89 @@
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
 
-// Define o LED usando Device Tree
-#define LED0_NODE DT_ALIAS(led0)
-#define LED1_NODE DT_ALIAS(led1)
+// Define o LED verde usando Device Tree
+#define LED_VERDE DT_ALIAS(led0)
 
-// Verifica se o LED está definido no Device Tree
-#if DT_NODE_HAS_STATUS(LED0_NODE, okay)
-static const struct gpio_dt_spec led_green = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
+// Define o LED azul usando o Device Tree
+#define LED_AZUL DT_ALIAS(led1)
+
+// Verifica se o LED verde está definido no Device Tree
+#if DT_NODE_HAS_STATUS(LED_VERDE, okay)
+static const struct gpio_dt_spec ledverde = GPIO_DT_SPEC_GET(LED_VERDE, gpios);
 #else
 #error "Unsupported board: led0 devicetree alias is not defined"
 #endif
 
-// Verifica se o LED está definido no Device Tree
-#if DT_NODE_HAS_STATUS(LED1_NODE, okay)
-static const struct gpio_dt_spec led_blue = GPIO_DT_SPEC_GET(LED1_NODE, gpios);
+// Verifica se o LED azul está definido no Device Tree
+#if DT_NODE_HAS_STATUS(LED_AZUL, okay)
+static const struct gpio_dt_spec ledazul = GPIO_DT_SPEC_GET(LED_AZUL, gpios);
 #else
-#error "Unsupported board: led0 devicetree alias is not defined"
+#error "Unsupported board: led2 devicetree alias is not defined"
 #endif
 
 
-void main(void)
+void pisca_verde(void)
 {
-    int ret_green, ret_blue;
+    while (1) {
+        gpio_pin_toggle_dt(&ledverde);
+        k_msleep(25);
+        printk("Led verde piscou!\n");
+        gpio_pin_toggle_dt(&ledverde);
+        k_msleep(975);
+    }
+}
 
-    // Verifica se o device está pronto
-    if (!gpio_is_ready_dt(&led_green)) {
-        printk("Error: LED device %s is not ready\n", led_green.port->name);
+void pisca_azul(void)
+{
+    while (1) {
+        gpio_pin_toggle_dt(&ledazul);
+        k_msleep(25);
+        printk("Led azul piscou!\n");
+        gpio_pin_toggle_dt(&ledazul);
+        k_msleep(275);
+    }
+}
+
+// Criar a thread para LED verde
+K_THREAD_DEFINE(thread_led_verde, 512, pisca_verde, NULL, NULL, NULL, 7, 0, 0);
+
+// Criar a thread para LED azul
+K_THREAD_DEFINE(thread_led_azul, 512, pisca_azul, NULL, NULL, NULL, 7, 0, 0);
+
+void main(void){
+
+    printk("Main iniciou\n");
+
+    int retverde, retazul;
+
+    // Verifica se o device (LED verde) está pronto
+    if (!gpio_is_ready_dt(&ledverde)) {
+        printk("Error: Green LED device %s is not ready\n", ledverde.port->name);
         return;
     }
 
-    // Verifica se o device está pronto
-    if (!gpio_is_ready_dt(&led_blue)) {
-        printk("Error: LED device %s is not ready\n", led_blue.port->name);
+    // Configura o pino do LED verde como saída
+    retverde = gpio_pin_configure_dt(&ledverde, GPIO_OUTPUT_INACTIVE);
+    if (retverde < 0) {
+        printk("Error %d: failed to configure green LED pin\n", retverde);
         return;
     }
 
-    // Configura o pino como saída
-    ret_green = gpio_pin_configure_dt(&led_green, GPIO_OUTPUT_INACTIVE);
-    if (ret_green < 0) {
-        printk("Error %d: failed to configure LED pin\n", ret_green);
+    // Verifica se o device (LED azul) está pronto
+    if (!gpio_is_ready_dt(&ledazul)) {
+        printk("Error: Blue LED device %s is not ready\n", ledazul.port->name);
         return;
     }
 
-    printk("LED blinking on %s pin %d\n", led_green.port->name, led_green.pin);
-
-
-    // Configura o pino como saída
-    ret_blue = gpio_pin_configure_dt(&led_blue, GPIO_OUTPUT_INACTIVE);
-    if (ret_blue < 0) {
-        printk("Error %d: failed to configure LED pin\n", ret_blue);
+    // Configura o pino do LED verde como saída
+    retazul = gpio_pin_configure_dt(&ledazul, GPIO_OUTPUT_INACTIVE);
+    if (retazul < 0) {
+        printk("Error %d: failed to configure blue LED pin\n", retazul);
         return;
     }
-
-    printk("LED blinking on %s pin %d\n", led_green.port->name, led_green.pin);
-
-
-
 
     while (1) {
-        // Toggle do led 
-
-        // O LED verde pisca a cada 1 segundo durante 50ms e o azul a cada 500ms durante 50ms
-        // como eles estam em fases, eles piscam juntos no ciano 
-        gpio_pin_toggle_dt(&led_green);
-        gpio_pin_toggle_dt(&led_blue);
-        k_msleep(50);
-        gpio_pin_toggle_dt(&led_green);
-        gpio_pin_toggle_dt(&led_blue);
-
-        
-        k_msleep(450);
-        gpio_pin_toggle_dt(&led_blue);
-        k_msleep(50);
-        gpio_pin_toggle_dt(&led_blue);
-        k_msleep(450);
+        printk("Main executando\n");
+        k_msleep(7000);
     }
 }
