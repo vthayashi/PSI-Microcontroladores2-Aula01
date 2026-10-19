@@ -1,3 +1,32 @@
+<<<<<<< HEAD
+How to build PlatformIO based project
+=====================================
+
+1. [Install PlatformIO Core](https://docs.platformio.org/page/core.html)
+2. Download [development platform with examples](https://github.com/platformio/platform-freescalekinetis/archive/develop.zip)
+3. Extract ZIP archive
+4. Run these commands:
+
+```shell
+# Change directory to example
+$ cd platform-freescalekinetis/examples/zephyr-blink
+
+# Build project
+$ pio run
+
+# Upload firmware
+$ pio run --target upload
+
+# Build specific environment
+$ pio run -e frdm_k64f
+
+# Upload firmware for the specific environment
+$ pio run -e frdm_k64f --target upload
+
+# Clean build files
+$ pio run --target clean
+```
+=======
 # PSI-Microcontroladores2-Aula01
 
 Atividade prática inicial da aula 1 da disciplina Microcontroladores 2 (PSI).
@@ -37,3 +66,4 @@ Materiais para consulta: https://frdm-kl25z-com-zephyr-rtos.super.site/instalao,
 ### Desafio (individual)
 - [ ] Explore recursos de debug e faça um arquivo markdown mostrando como estes recursos podem ser úteis na identificação e correção de problemas
 - [ ] Reflita e responda em seu arquivo markdown: qual a diferença entre os recursos de debug e testes? São abordagens complementares?
+>>>>>>> 3d61a362d94b39b6fd5c9d42adda2c772f83fd83
